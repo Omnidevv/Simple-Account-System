@@ -1,0 +1,41 @@
+<html>
+    <head>
+        <title>Signup Page</title>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <form id="register" autocomplete="off">
+            <input id="username" type="text" name="username" placeholder="username"/><br>
+            <input id="password" type="password" name="password" placeholder="password"/><br>
+            <input id="email" type="email" name="email" placeholder="email"/><br>
+            <input type="submit" value="Create Account"/>
+        </form>
+        <br>
+        <p>Already have an account?</p>
+        <a href="/login">Login here</a>
+
+        <script>
+            $(document).ready(function(){
+                $("#register").submit(function(e){
+                    e.preventDefault() //Prevents page refresh
+                    
+                    var regData = {
+                        username: $("#username").val(),
+                        password: $("#password").val(),
+                        email: $("#email").val(),
+                    }
+
+                    $.post("/api/signup", regData, function(res){
+                        if(res.success === true){
+                            alert("Success!")
+                        } 
+                        else {
+                            if(res.reason) alert(res.reason)
+                            else alert("Unknown error")
+                        }
+                    })
+                })
+            })
+        </script>
+    </body>
+</html>
